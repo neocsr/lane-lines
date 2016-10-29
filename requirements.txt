@@ -41,6 +41,7 @@ greenlet==0.4.10
 h5py==2.6.0
 HeapDict==1.0.0
 idna==2.1
+imageio==1.6
 imagesize==0.7.1
 ipykernel==4.5.0
 ipython==5.1.0
@@ -62,6 +63,7 @@ lxml==3.6.4
 MarkupSafe==0.23
 matplotlib==1.5.3
 mistune==0.7.3
+moviepy==0.2.2.11
 mpmath==0.19
 multipledispatch==0.4.8
 nb-anacondacloud==1.2.0
@@ -132,6 +134,7 @@ tables==3.2.3.1
 terminado==0.6
 toolz==0.8.0
 tornado==4.4.1
+tqdm==4.8.4
 traitlets==4.3.0
 unicodecsv==0.14.1
 wcwidth==0.1.7
