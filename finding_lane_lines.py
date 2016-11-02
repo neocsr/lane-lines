@@ -119,6 +119,11 @@ def draw_lines_enhanced(img, lines, color=[255, 0, 0], thickness=10):
 
     for line in lines:
         x1, y1, x2, y2 = line[0]
+
+        # Separate the lines in two groups depending on their slope.
+        # The left line has negative slope, considering the positive
+        # `y` axis is pointing down
+
         m = slope(x1, y1, x2, y2)
         if m < 0:
             left_points.append((x1, y1))
@@ -127,10 +132,18 @@ def draw_lines_enhanced(img, lines, color=[255, 0, 0], thickness=10):
             right_points.append((x1, y1))
             right_points.append((x2, y2))
 
+        # Find the minimum y coordinate among all points
+
         if (y1 < y2):
             y_min = y_min if (y_min < y1) else y1
         else:
             y_min = y_min if (y_min < y2) else y2
+
+    # Fit a line among the points in each group (left and right)
+    # We use the `fitLine` function from OpenCV that returns a
+    # unit vector (vx, vy) and a point(x0, y0) in the line.
+    # The slope `m` will be `vy/vx` and we can calculate the
+    # intercept `b` from `y0 - m/x0`
 
     vx, vy, x0, y0 = cv2.fitLine(
         np.array(left_points), cv2.DIST_L2, 0, 0.01, 0.01)
@@ -140,7 +153,7 @@ def draw_lines_enhanced(img, lines, color=[255, 0, 0], thickness=10):
     left_x_max = int((y_max - left_b)/left_m)
     cv2.line(img,
         (left_x_min, y_min),
-        (left_x_max, y_max), [155, 50, 0], thickness)
+        (left_x_max, y_max), color, thickness)
 
     vx, vy, x0, y0 = cv2.fitLine(
         np.array(right_points), cv2.DIST_L2, 0, 0.01, 0.01)
